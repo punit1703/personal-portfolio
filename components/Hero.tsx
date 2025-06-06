@@ -18,6 +18,7 @@ function Hero() {
   }, []);
 
   return (
+    <>
     <div className="relative w-full h-screen overflow-hidden bg-black text-white">
       <Spotlight
         className="-top-40 left-0 md:left-60 md:-top-20"
@@ -34,7 +35,7 @@ function Hero() {
 
       <div className="relative z-10 flex flex-col items-center justify-center text-center max-w-4xl mx-auto h-full px-6">
         <h1 className="text-3xl md:text-4xl font-semibold text-white">
-          Hi! I'm Puneet Patel
+          Hi! this is Punit.
         </h1>
 
         <TextGenerateEffect
@@ -47,6 +48,8 @@ function Hero() {
         </p>
       </div>
     </div>
+      <hr className="bg-white" />
+    </>
   );
 }
 

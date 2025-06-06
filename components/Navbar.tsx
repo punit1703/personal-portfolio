@@ -20,7 +20,7 @@ function Navbar() {
         px-4 py-2 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
         ${hovered ? "w-[380px] sm:w-[520px]" : "w-[120px]"}`}
     >
-      <div className="text-lg font-bold tracking-wide shrink-0">PP</div>
+      <Link href="/" className="text-lg font-bold tracking-wide shrink-0">PP</Link>
 
       <div
         className={`absolute left-1/2 -translate-x-1/2 flex gap-6 md:gap-11 transition-all duration-300 ${

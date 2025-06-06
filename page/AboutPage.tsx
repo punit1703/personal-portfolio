@@ -6,14 +6,14 @@ import { Button } from '@/components/ui/button';
 
 const About = () => {
   return (
-    <section className="w-full bg-gray-950 text-white py-20 px-6 md:px-12">
+    <section className="w-full text-white py-20 px-6 md:px-12">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
         
         {/* Left: Image Section */}
         <div className="w-full md:w-1/2 relative h-[300px] md:h-[400px]">
           <Image
             src="/images/profile.png" // replace with your image
-            alt="Puneet Patel"
+            alt="Punit Patel"
             fill
             className="object-cover rounded-3xl shadow-xl"
           />
@@ -31,6 +31,8 @@ const About = () => {
             <span className="bg-white text-black px-4 py-1 rounded-full text-sm font-medium">Django</span>
             <span className="bg-white text-black px-4 py-1 rounded-full text-sm font-medium">Machine Learning</span>
             <span className="bg-white text-black px-4 py-1 rounded-full text-sm font-medium">REST APIs</span>
+            <span className="bg-white text-black px-4 py-1 rounded-full text-sm font-medium">Next Js</span>
+            <span className="bg-white text-black px-4 py-1 rounded-full text-sm font-medium">Tailwind CSS</span>
           </div>
 
           <Button variant="default" className="rounded-full px-6 py-2 mt-4">
