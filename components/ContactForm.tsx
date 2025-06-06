@@ -29,7 +29,7 @@ const ContactPage = React.memo(() => {
 
   return (
     <>
-    <div className="absolute z-0 w-[650px] h-[650px] bg-blue-600 blur-[80px] opacity-30 rounded-full pointer-events-none" />
+    <div className="absolute z-0 w-[90vw] max-w-[650px] h-[650px] bg-blue-600 blur-[80px] opacity-30 rounded-full pointer-events-none" />
       <section className="w-full px-4 sm:px-6 py-36 bg-[#0f0f0f] text-white">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
           {/* Info Section */}

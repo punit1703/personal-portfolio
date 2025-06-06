@@ -3,13 +3,21 @@
 import { useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
+import { useCurrentTime } from "@/hooks/useCurrentTime";
 
 import React from 'react'
 
 function Navbar() {
   const [hovered, setHovered] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
+  const time = useCurrentTime();
   return (
+    <>
+    {/* Time - Top Right */}
+        <div className="hidden sm:block absolute top-6 right-6 text-sm sm:text-base text-gray-400 font-medium z-20">
+
+          Based in Gandhinagar → <span className="text-white">{time}</span>
+        </div>
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -39,6 +47,7 @@ function Navbar() {
         {darkMode ? <Sun size={18} /> : <Moon size={18} />}
       </button>
     </div>
+    </>
   );
 }
 

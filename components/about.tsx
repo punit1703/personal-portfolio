@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -13,19 +13,21 @@ const skills = [
 
 const About = () => {
   return (
-    <section className="w-full bg-gradient-to-b from-[#0e0e0e] via-[#1c1b1a] to-[#0e0e0e] text-white py-20 px-6 md:px-12">
+    <section className="w-full overflow-x-hidden bg-gradient-to-b from-[#0e0e0e] via-[#1c1b1a] to-[#0e0e0e] text-white py-20 px-4 sm:px-6 md:px-12">
+
+      <div className="absolute z-0 w-[90vw] max-w-[650px] h-[650px] bg-blue-600 blur-[80px] opacity-30 rounded-full pointer-events-none" />
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
         {/* Left: Profile Image */}
-        <div className="w-full md:w-1/2 relative h-[300px] md:h-[400px]">
-          <Image
-            src="/images/profile.png"
-            alt="Punit Patel"
-            fill
-            className="object-cover rounded-3xl shadow-2xl border border-gray-800"
-          />
+        <div className="w-full md:w-1/2 flex justify-center items-end">
+          <div className="relative w-[280px] h-[360px] md:w-[320px] md:h-[420px] overflow-hidden rounded-3xl shadow-2xl border border-gray-800">
+            <Image
+              src="/profile-1.webp"
+              alt="Punit Patel"
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
-
-        <div className="absolute z-0 w-[650px] h-[650px] bg-blue-600 blur-[80px] opacity-30 rounded-full pointer-events-none" />
 
         {/* Right: Content */}
         <div className="w-full md:w-1/2 space-y-6">

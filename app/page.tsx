@@ -4,12 +4,13 @@ import React from "react";
 
 const projectdata = [
   {
-    title: "TaskMaster",
+    title: "Doc2Model - Linear Regression",
     description:
-      "A sleek and responsive task management web app built with Django and Tailwind CSS. Features include user authentication, task filtering, search, statistics tracking, and a mobile-optimized UI.",
+      "A smart machine learning project that automatically extracts data from documents and builds a linear regression model. Ideal for predictive analysis tasks such as pricing or trend forecasting.",
     imageUrl: "/project-1.png",
-    previewLink: "https://taskmaster-b4id.onrender.com/",
     githubLink: "https://github.com/your-repo",
+    stack: ["Python", "Pandas", "Scikit-learn", "NumPy", "Matplotlib"],
+    tag: ["Machine Learning", "Data Extraction", "Linear Regression"]
   },
   {
     title: "Doc2Model linear regression",

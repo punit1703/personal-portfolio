@@ -7,6 +7,8 @@ interface ProjectCardProps {
   imageUrl: string;
   previewLink?: string;
   githubLink: string;
+  techStack?: string[]; // e.g., ['Next.js', 'Tailwind', 'Vercel']
+  tags?: string[];      // e.g., ['Machine Learning', 'Backend']
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -15,9 +17,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   imageUrl,
   previewLink,
   githubLink,
+  techStack = [],
+  tags = [],
 }) => {
   return (
-    <div className="w-full max-w-5xl sm:h-[300px] mx-auto my-10 bg-[#1c1b1a] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div className="w-full max-w-5xl sm:h-[320px] mx-auto my-10 bg-[#1c1b1a] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl hover:scale-105 transition-transform duration-300 ease-in-out">
       <div className="flex flex-col md:flex-row h-full">
         {/* Image Section */}
         <div className="w-full md:w-1/2 h-72 sm:h-full overflow-hidden relative">
@@ -29,31 +33,53 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         {/* Text Section */}
-        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center text-white">
+        <div className="w-full md:w-1/2 p-8 sm:p-10 flex flex-col justify-between text-white">
           <div>
-            <h1 className="text-3xl font-bold mb-2">{title}</h1>
-            <p className="text-zinc-400 text-sm">{description}</p>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">{title}</h1>
+            <p className="text-zinc-400 text-sm sm:text-base">{description}</p>
+
+            {/* Tech Stack */}
+            {techStack.length > 0 && (
+              <p className="text-xs text-gray-500 mt-4">
+                <span className="font-medium text-gray-400">Tech Stack:</span>{" "}
+                {techStack.join(", ")}
+              </p>
+            )}
+
+            {/* Tags */}
+            {tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-3">
+                {tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="text-xs bg-zinc-800 text-zinc-300 border border-zinc-700 px-3 py-1 rounded-full"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-3 mt-7">
+          <div className="flex gap-3 mt-6">
             {previewLink && (
               <a
                 href={previewLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white border-1 border-white hover:text-black transition hover:bg-white p-1.5 rounded-full duration-300"
+                className="text-white border border-white hover:text-black transition hover:bg-white p-1.5 rounded-full duration-300"
               >
-                <ExternalLink size={24} />
+                <ExternalLink size={20} />
               </a>
             )}
             <a
               href={githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white border-1 border-white hover:text-black transition hover:bg-white p-1.5 rounded-full duration-300"
+              className="text-white border border-white hover:text-black transition hover:bg-white p-1.5 rounded-full duration-300"
             >
-              <Github size={24} />
+              <Github size={20} />
             </a>
           </div>
         </div>

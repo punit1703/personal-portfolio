@@ -3,11 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { Spotlight } from "@/components/ui/spotlight";
-import { useCurrentTime } from "@/hooks/useCurrentTime";
 
 function Hero() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const time = useCurrentTime();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -23,10 +21,7 @@ function Hero() {
         {/* Spotlight Blur Effect */}
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
 
-        {/* Time - Top Right */}
-        <div className="absolute top-6 right-6 text-sm sm:text-base text-gray-400 font-medium z-20">
-          Based in Gandhinagar → <span className="text-white">{time}</span>
-        </div>
+        
 
         {/* Cursor-following Blob */}
         <div
