@@ -38,7 +38,7 @@ const Footer = () => {
           <ul className="space-y-2 text-zinc-400">
             <li><Link href="/">Home</Link></li>
             <li><Link href="/about">About</Link></li>
-            <li><Link href="/projects">Projects</Link></li>
+            <li><Link href="/#projects">Projects</Link></li>
             <li><Link href="/contact">Contact</Link></li>
           </ul>
         </div>
