@@ -19,7 +19,7 @@ const About = () => {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
         {/* Left: Profile Image */}
         <div className="w-full md:w-1/2 flex justify-center items-end">
-          <div className="relative w-[280px] h-[360px] md:w-[320px] md:h-[420px] overflow-hidden rounded-3xl shadow-2xl border border-gray-800">
+          <div className="relative w-[360px] h-[360px] md:w-[420px] md:h-[420px] overflow-hidden rounded-4xl shadow-2xl border-2 border-white">
             <Image
               src="/profile-1.webp"
               alt="Punit Patel"

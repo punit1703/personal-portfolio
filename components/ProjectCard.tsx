@@ -7,8 +7,8 @@ interface ProjectCardProps {
   imageUrl: string;
   previewLink?: string;
   githubLink: string;
-  techStack?: string[]; // e.g., ['Next.js', 'Tailwind', 'Vercel']
-  tags?: string[];      // e.g., ['Machine Learning', 'Backend']
+  techStack?: string[];
+  tags?: string[];
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -33,9 +33,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         {/* Text Section */}
-        <div className="w-full md:w-1/2 p-8 sm:p-10 flex flex-col justify-between text-white">
+        <div className="w-full md:w-1/2 p-8 sm:p-10 flex flex-col justify-center text-white">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2">{title}</h1>
+            <h1 className="text-xl sm:text-2xl font-bold mb-2">{title}</h1>
             <p className="text-zinc-400 text-sm sm:text-base">{description}</p>
 
             {/* Tech Stack */}

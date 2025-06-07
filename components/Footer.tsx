@@ -13,8 +13,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#1c1b1a] text-white py-12 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 pb-10 border-b border-gray-700">
-        
-        {/* Section 1: Name + Bio + Socials */}
+        {/* section 1 */}
         <div>
           <h3 className="text-2xl font-bold">Punit Patel</h3>
           <p className="text-zinc-400 mt-2 mb-4">

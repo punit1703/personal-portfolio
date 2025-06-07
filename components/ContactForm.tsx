@@ -45,13 +45,13 @@ const ContactPage = React.memo(() => {
               <div className="flex items-center gap-2">
                 <MapPin className="text-blue-500" size={18} />
                 <span className="text-gray-300 text-sm">
-                  Surat, Gujarat, India
+                  Gandhinagar, Gujarat, India
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="text-blue-500" size={18} />
                 <span className="text-gray-300 text-sm">
-                  punitpatel@example.com
+                  punitr2006@gmail.com
                 </span>
               </div>
             </div>

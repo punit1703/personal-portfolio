@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, MousePointerClick } from "lucide-react";
 import Link from "next/link";
 import { useCurrentTime } from "@/hooks/useCurrentTime";
 
@@ -25,7 +25,7 @@ function Navbar() {
         bg-white/10 border border-white/10 backdrop-blur-md
         shadow-lg text-white rounded-full
         flex items-center justify-between
-        px-4 py-2 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
+        px-2 py-1 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
         ${hovered ? "w-[380px] sm:w-[520px]" : "w-[120px]"}`}
     >
       <Link href="/" className="text-lg px-2 font-bold tracking-wide shrink-0 text-center hover:bg-white/20 transition-colors rounded-full">P</Link>
@@ -36,7 +36,7 @@ function Navbar() {
         }`}
       >
         <NavLink href="/about" label="About" />
-        <NavLink href="/projects" label="Projects" />
+        <NavLink href="/#projects" label="Projects" />
         <NavLink href="/contact" label="Contact" />
       </div>
 
@@ -44,7 +44,7 @@ function Navbar() {
         onClick={() => setDarkMode((prev) => !prev)}
         className="p-2 hover:bg-white/20 rounded-full transition-colors shrink-0"
       >
-        {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+        <MousePointerClick/>
       </button>
     </div>
     </>
