@@ -1,5 +1,6 @@
 import React from "react";
 import { ExternalLink, Github } from "lucide-react";
+import Image from "next/image";
 
 interface ProjectCardProps {
   title: string;
@@ -25,10 +26,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       <div className="flex flex-col md:flex-row h-full">
         {/* Image Section */}
         <div className="w-full md:w-1/2 h-72 sm:h-full overflow-hidden relative">
-          <img
+          <Image
             src={imageUrl}
             alt={title}
-            className="w-full h-auto md:h-[120%] object-cover absolute top-0 left-0"
+            fill
+            className="object-cover absolute top-0 left-0"
           />
         </div>
 

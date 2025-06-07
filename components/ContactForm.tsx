@@ -4,7 +4,7 @@ import { useForm, ValidationError } from "@formspree/react";
 import { Mail, MapPin, User, PencilLine, MessageSquare } from "lucide-react";
 import Link from "next/link";
 
-const ContactPage = React.memo(() => {
+const ContactForm = React.memo(() => {
   const [state, handleSubmit] = useForm("manjqqbl");
 
   if (state.succeeded) {
@@ -37,7 +37,7 @@ const ContactPage = React.memo(() => {
             <h2 className="text-3xl sm:text-4xl font-bold">Get In Touch</h2>
             <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
               Feel free to reach out to me for any questions, project inquiries,
-              or just to say hello. I'm always open to discussing new projects
+              or just to say hello. {"I'm"} always open to discussing new projects
               and opportunities.
             </p>
             
@@ -129,9 +129,27 @@ const ContactPage = React.memo(() => {
   );
 });
 
-export default ContactPage;
+ContactForm.displayName = "ContactForm";
 
-function InputField({ icon, id, type, name, placeholder, required = false }) {
+export default ContactForm;
+
+interface InputFieldProps {
+  icon: React.ReactNode;
+  id: string;
+  type: string;
+  name: string;
+  placeholder: string;
+  required?: boolean;
+}
+
+function InputField({
+  icon,
+  id,
+  type,
+  name,
+  placeholder,
+  required = false,
+}: InputFieldProps) {
   return (
     <div className="relative">
       <div className="absolute left-3 top-3 text-gray-400">{icon}</div>

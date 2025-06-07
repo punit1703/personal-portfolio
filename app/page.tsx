@@ -10,7 +10,7 @@ const projectdata = [
       githubLink: "https://github.com/yourusername/doc2model-linear",
       stack: ["Python", "pandas", "scikit-learn"],
       tag: "Featured",
-      previewLink: null,
+      previewLink: undefined,
     },
     {
       title: "Doc2Model - Classification",
@@ -19,7 +19,7 @@ const projectdata = [
       githubLink: "https://github.com/yourusername/doc2model-classification",
       stack: ["Python", "scikit-learn", "Matplotlib"],
       tag: "ML",
-      previewLink: null,
+      previewLink: undefined,
     },
     {
       title: "TaskMaster (ToDo App)",
@@ -37,7 +37,7 @@ const projectdata = [
       githubLink: "https://github.com/yourusername/portfolio",
       stack: ["Next.js", "Tailwind CSS"],
       tag: "Frontend",
-      previewLink: null,
+      previewLink: undefined,
     },
 ];
 export default function Home() {

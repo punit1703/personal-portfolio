@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Moon, Sun, MousePointerClick } from "lucide-react";
+import { MousePointerClick } from "lucide-react";
 import Link from "next/link";
 import { useCurrentTime } from "@/hooks/useCurrentTime";
 
@@ -9,7 +9,6 @@ import React from 'react'
 
 function Navbar() {
   const [hovered, setHovered] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
   const time = useCurrentTime();
   return (
     <>
@@ -41,7 +40,6 @@ function Navbar() {
       </div>
 
       <button
-        onClick={() => setDarkMode((prev) => !prev)}
         className="p-2 hover:bg-white/20 rounded-full transition-colors shrink-0"
       >
         <MousePointerClick/>
