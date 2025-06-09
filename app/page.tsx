@@ -6,7 +6,7 @@ const projectdata = [
   {
       title: "Doc2Model - Linear Regression",
       description: "Auto-generate linear regression models from CSV files using scikit-learn and pandas.",
-      imageUrl: "/project/linear-regression.png",
+      imageUrl: "/project/linear-regression.jpg",
       githubLink: "https://github.com/punit1703/Doc2Model-Linear-Regression",
       stack: ["Python", "pandas", "scikit-learn"],
       tag: "Featured",
@@ -15,7 +15,7 @@ const projectdata = [
     {
       title: "Doc2Model - Classification",
       description: "Train classification models from structured document data with performance metrics.",
-      imageUrl: "/project/classification.png",
+      imageUrl: "/project/classification.jpg",
       githubLink: "https://github.com/punit1703/Doc2Model-Classification",
       stack: ["Python", "scikit-learn", "Matplotlib"],
       tag: "ML",
@@ -24,7 +24,7 @@ const projectdata = [
     {
       title: "TaskMaster (ToDo App)",
       description: "Fullstack ToDo app with Django, user auth, filtering, and stats dashboard.",
-      imageUrl: "/project/TaskMaster.png",
+      imageUrl: "/project/TaskMaster.jpg",
       githubLink: "https://github.com/punit1703/TaskMaster",
       stack: ["Django", "Tailwind CSS", "SQLite"],
       tag: "Web App",
@@ -33,7 +33,7 @@ const projectdata = [
     {
       title: "Personal Portfolio Website",
       description: "Responsive dark-themed portfolio built with Next.js and Tailwind CSS.",
-      imageUrl: "/project/portfolio.png",
+      imageUrl: "/project/portfolio.jpg",
       githubLink: "https://github.com/punit1703/personal-portfolio",
       stack: ["Next.js", "Tailwind CSS"],
       tag: "Frontend",

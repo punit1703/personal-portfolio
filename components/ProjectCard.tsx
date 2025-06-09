@@ -22,20 +22,23 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   tags = [],
 }) => {
   return (
-    <div className="w-full max-w-5xl sm:h-[320px] mx-auto my-10 bg-[#1c1b1a] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl hover:scale-105 transition-transform duration-300 ease-in-out">
-      <div className="flex flex-col md:flex-row h-full">
+    <div className="w-full max-w-5xl mx-auto my-10 bg-[#1c1b1a] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-transform duration-300 hover:scale-[1.05]">
+      <div className="flex flex-col md:flex-row">
+        
         {/* Image Section */}
-        <div className="w-full md:w-1/2 h-72 sm:h-full overflow-hidden relative">
-          <Image
-            src={imageUrl}
-            alt={title}
-            fill
-            className="object-cover absolute top-0 left-0"
-          />
+        <div className="w-full md:w-1/2">
+          <div className="relative w-full aspect-[16/9] md:h-full">
+            <Image
+              src={imageUrl}
+              alt={title}
+              fill
+              className="object-contain md:object-cover"
+            />
+          </div>
         </div>
 
         {/* Text Section */}
-        <div className="w-full md:w-1/2 p-8 sm:p-10 flex flex-col justify-center text-white">
+        <div className="w-full md:w-1/2 p-6 sm:p-8 flex flex-col justify-center text-white">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold mb-2">{title}</h1>
             <p className="text-zinc-400 text-sm sm:text-base">{description}</p>
@@ -70,7 +73,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 href={previewLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white border border-white hover:text-black transition hover:bg-white p-1.5 rounded-full duration-300"
+                className="text-white border border-white hover:text-black hover:bg-white p-1.5 rounded-full transition duration-300"
               >
                 <ExternalLink size={20} />
               </a>
@@ -79,7 +82,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               href={githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white border border-white hover:text-black transition hover:bg-white p-1.5 rounded-full duration-300"
+              className="text-white border border-white hover:text-black hover:bg-white p-1.5 rounded-full transition duration-300"
             >
               <Github size={20} />
             </a>
