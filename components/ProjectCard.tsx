@@ -26,7 +26,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       <div className="flex flex-col md:flex-row">
         {/* Image Section */}
         <div className="w-full md:w-1/2">
-          <div className="relative w-full aspect-[16/9] md:h-full border-b-2 border-[var(--primary)]">
+          <div className="relative w-full aspect-[16/9] md:h-full border-b-2 sm:border-0 border-[var(--primary)]">
             <Image
               src={imageUrl}
               alt={title}
