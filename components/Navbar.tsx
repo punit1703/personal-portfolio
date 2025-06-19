@@ -1,50 +1,80 @@
 "use client";
 
-import { useState } from "react";
-import { MousePointerClick } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import { useCurrentTime } from "@/hooks/useCurrentTime";
-
-import React from 'react'
 
 function Navbar() {
   const [hovered, setHovered] = useState(false);
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const time = useCurrentTime();
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const checkScreen = () => {
+      setIsMobile(window.innerWidth < 640); // sm breakpoint
+    };
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
+
+  const toggleTheme = () => {
+    if (!mounted) return;
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  };
+
   return (
     <>
-    {/* Time - Top Right */}
-        <div className="hidden sm:block absolute top-6 right-6 text-sm sm:text-base text-gray-400 font-medium z-20">
-
-          Based in Gandhinagar → <span className="text-white">{time}</span>
-        </div>
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className={`fixed top-5 left-1/2 -translate-x-1/2 z-50
-        bg-white/10 border border-white/10 backdrop-blur-md
-        shadow-lg text-white rounded-full
-        flex items-center justify-between
-        px-2 py-1 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
-        ${hovered ? "w-[380px] sm:w-[520px]" : "w-[120px]"}`}
-    >
-      <Link href="/" className="text-lg px-2 font-bold tracking-wide shrink-0 text-center hover:bg-white/20 transition-colors rounded-full">P</Link>
-
-      <div
-        className={`absolute left-1/2 -translate-x-1/2 flex gap-6 md:gap-11 transition-all duration-300 ${
-          hovered ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <NavLink href="/about" label="About" />
-        <NavLink href="/#projects" label="Projects" />
-        <NavLink href="/contact" label="Contact" />
+      <div className="hidden sm:block absolute top-6 right-6 text-sm sm:text-base text-muted-foreground font-medium z-20">
+        Based in Gandhinagar →{" "}
+        <span className="text-foreground">{time}</span>
       </div>
 
-      <button
-        className="p-2 hover:bg-white/20 rounded-full transition-colors shrink-0"
+      <div
+        onMouseEnter={() => !isMobile && setHovered(true)}
+        onMouseLeave={() => !isMobile && setHovered(false)}
+        className={`fixed top-5 left-1/2 -translate-x-1/2 z-50
+        bg-[var(--muted)]/50 backdrop-blur-md
+        shadow-lg text-[var(--foreground)] rounded-full
+        flex items-center justify-between
+        px-3 py-2 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
+        ${!isMobile && !hovered ? "w-[120px]" : "w-[380px] sm:w-[520px]"}`}
       >
-        <MousePointerClick/>
-      </button>
-    </div>
+        <Link
+          href="/"
+          className="text-lg px-2 font-bold tracking-wide shrink-0 text-center hover:bg-[var(--muted)]/40 transition-colors rounded-full"
+        >
+          P
+        </Link>
+
+        <div
+          className={`absolute left-1/2 -translate-x-1/2 flex gap-6 md:gap-11 transition-all duration-300 ${
+            !isMobile && !hovered ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+        >
+          <NavLink href="/about" label="About" />
+          <NavLink href="/projects" label="Projects" />
+          <NavLink href="/contact" label="Contact" />
+        </div>
+
+        <button
+          onClick={toggleTheme}
+          className="p-2 hover:bg-[var(--muted)]/40 rounded-full transition-colors shrink-0"
+          aria-label="Toggle Theme"
+        >
+          {mounted && resolvedTheme === "dark" ? (
+            <Sun size={18} className="text-yellow-400" />
+          ) : (
+            <Moon size={18} className="text-gray-900" />
+          )}
+        </button>
+      </div>
     </>
   );
 }
@@ -53,7 +83,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      className="text-md font-bold text-gray-400 hover:text-white transition-colors  duration-300"
+      className="text-md font-bold text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors duration-300"
     >
       {label}
     </Link>

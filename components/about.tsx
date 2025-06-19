@@ -1,6 +1,9 @@
 "use client";
+
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import profileImage from "@/public/profile-1.webp";
 
 const skills = [
   { name: "Python", level: 95 },
@@ -12,27 +15,32 @@ const skills = [
 
 const About = () => {
   return (
-    <section className="w-full overflow-x-hidden bg-gradient-to-b from-[#0e0e0e] via-[#1c1b1a] to-[#0e0e0e] text-white py-20 px-4 sm:px-6 md:px-12">
+    <section className="relative w-full bg-background text-foreground py-20 px-4 sm:px-6 md:px-12 overflow-x-hidden">
 
-      <div className="absolute z-0 w-[90vw] max-w-[650px] h-[650px] bg-blue-600 blur-[80px] opacity-30 rounded-full pointer-events-none" />
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
-        {/* Left: Profile Image */}
+      <div className="absolute -top-20 left-1/5 -translate-x-1/2 z-0 w-[700px] h-[700px] bg-[var(--primary)] blur-2xl opacity-30 rounded-full pointer-events-none" />
+
+      {/* Main Grid */}
+      <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+        {/* Profile Image */}
         <div className="w-full md:w-1/2 flex justify-center items-end">
-          <div className="relative w-[360px] h-[360px] md:w-[420px] md:h-[420px] overflow-hidden rounded-4xl shadow-2xl border-2 border-white">
+          <div className="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-3xl overflow-hidden shadow-lg border border-muted">
             <Image
-              src="/profile-1.webp"
+              src={profileImage}
               alt="Punit Patel"
-              fill
-              className="object-cover"
+              width={400}
+              height={400}
+              placeholder="blur"
+              className="object-cover w-full h-full"
             />
           </div>
         </div>
 
-        {/* Right: Content */}
+        {/* About Content */}
         <div className="w-full md:w-1/2 space-y-6">
           <h2 className="text-4xl font-bold">About Me</h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            {"I'm"} <span className="text-white font-semibold">Punit Patel.</span>,
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            {"I'm"}{" "}
+            <span className="text-foreground font-semibold">Punit Patel</span>,
             a passionate Pythonista and backend developer focused on crafting
             scalable web apps using Django, integrating smart ML features, and
             building fast UIs with Tailwind & Next.js.
@@ -50,15 +58,14 @@ const About = () => {
             ].map((tech, i) => (
               <span
                 key={i}
-                className="bg-white/10 text-white px-4 py-1 rounded-full text-sm font-medium backdrop-blur border border-white/10"
+                className="bg-muted text-muted-foreground px-4 py-1 rounded-full text-sm font-medium border border-border"
               >
                 {tech}
               </span>
             ))}
           </div>
 
-          {/* Resume Button */}
-          <Button variant="default" className="rounded-full px-6 py-2 mt-4">
+          <Button variant="default" className="border-2 border-[var(--foreground)] text-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full px-6 py-2 mt-4">
             View Resume
           </Button>
         </div>
@@ -68,20 +75,28 @@ const About = () => {
       <div className="max-w-4xl mx-auto mt-20 space-y-6">
         <h3 className="text-2xl font-semibold mb-4">Skills</h3>
         {skills.map((skill, index) => (
-          <div key={index}>
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            viewport={{ once: true }}
+          >
             <div className="flex justify-between mb-1">
-              <span className="text-sm font-medium text-white">
+              <span className="text-sm font-medium text-foreground">
                 {skill.name}
               </span>
-              <span className="text-sm text-gray-400">{skill.level}%</span>
+              <span className="text-sm text-muted-foreground">
+                {skill.level}%
+              </span>
             </div>
-            <div className="w-full bg-gray-800 h-3 rounded-full">
+            <div className="w-full bg-muted h-3 rounded-full">
               <div
-                className="bg-blue-500 h-3 rounded-full transition-all duration-700"
+                className="bg-[var(--primary)] h-3 rounded-full transition-all duration-700"
                 style={{ width: `${skill.level}%` }}
               />
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

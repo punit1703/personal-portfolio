@@ -17,7 +17,7 @@ export const Button = ({
     'inline-block px-6 py-2 transition duration-300 font-semibold rounded-xl shadow-md';
 
   const variants = {
-    default: 'bg-transparent text-white border-2 border-white hover:bg-white hover:text-black',
+    default: 'border-2 border-[var(--foreground)] text-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)]',
     outline: 'text-black border border-black hover:bg-black hover:text-white',
   };
 
