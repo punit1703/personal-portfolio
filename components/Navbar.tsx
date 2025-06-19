@@ -8,7 +8,7 @@ import { useCurrentTime } from "@/hooks/useCurrentTime";
 
 function Navbar() {
   const [hovered, setHovered] = useState(false);
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const time = useCurrentTime();
 
@@ -17,7 +17,7 @@ function Navbar() {
   useEffect(() => {
     setMounted(true);
     const checkScreen = () => {
-      setIsMobile(window.innerWidth < 640); // sm breakpoint
+      setIsMobile(window.innerWidth < 640);
     };
     checkScreen();
     window.addEventListener("resize", checkScreen);

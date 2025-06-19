@@ -15,7 +15,7 @@ const ContactForm = React.memo(() => {
         </h2>
         <p className="text-muted-foreground text-base sm:text-lg mb-8 max-w-lg">
           Your message has been sent successfully. I appreciate you taking the
-          time to reach out — I'll get back to you as soon as possible.
+          time to reach out — I&apos;ll get back to you as soon as possible.
         </p>
         <Link
           href="/"
@@ -38,7 +38,7 @@ const ContactForm = React.memo(() => {
             <h2 className="text-3xl sm:text-4xl font-bold">Get In Touch</h2>
             <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
               Feel free to reach out to me for any questions, project inquiries,
-              or just to say hello. I'm always open to discussing new projects
+              or just to say hello. I&apos;m always open to discussing new projects
               and opportunities.
             </p>
 
