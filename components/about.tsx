@@ -37,11 +37,11 @@ const About = () => {
         <div className="w-full md:w-1/2 space-y-6">
           <h2 className="text-4xl font-bold">About Me</h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            I'm{" "}
+            I&apos;m{" "}
             <span className="text-foreground font-semibold">Punit Patel</span>,
             a passionate Pythonista and backend developer focused on crafting
             scalable web apps using Django, integrating smart ML features, and
-            building fast UIs with Tailwind & Next.js.
+            building fast UIs with Tailwind &amp; Next.js.
           </p>
 
           {/* Skill Tags */}
