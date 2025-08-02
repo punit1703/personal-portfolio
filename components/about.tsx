@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import profileImage from "@/public/profile-1.webp";
 
@@ -16,7 +15,6 @@ const skills = [
 const About = () => {
   return (
     <section className="relative w-full bg-background text-foreground py-20 px-4 sm:px-6 md:px-12 overflow-x-hidden">
-
       <div className="absolute -top-20 left-1/5 -translate-x-1/2 z-0 w-[700px] h-[700px] bg-[var(--primary)] blur-2xl opacity-30 rounded-full pointer-events-none" />
 
       {/* Main Grid */}
@@ -39,7 +37,7 @@ const About = () => {
         <div className="w-full md:w-1/2 space-y-6">
           <h2 className="text-4xl font-bold">About Me</h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            {"I'm"}{" "}
+            I'm{" "}
             <span className="text-foreground font-semibold">Punit Patel</span>,
             a passionate Pythonista and backend developer focused on crafting
             scalable web apps using Django, integrating smart ML features, and
@@ -65,9 +63,15 @@ const About = () => {
             ))}
           </div>
 
-          <Button variant="default" className="border-2 border-[var(--foreground)] text-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full px-6 py-2 mt-4">
+          {/* View Resume Button */}
+          <a
+            href="/Punit's_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block border-2 border-[var(--foreground)] text-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded-full px-6 py-2 mt-4 transition-colors duration-200"
+          >
             View Resume
-          </Button>
+          </a>
         </div>
       </div>
 
