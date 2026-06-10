@@ -3,6 +3,7 @@ import React from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import { Mail, MapPin, User, PencilLine, MessageSquare } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const ContactForm = React.memo(() => {
   const [state, handleSubmit] = useForm("manjqqbl");
@@ -29,10 +30,16 @@ const ContactForm = React.memo(() => {
 
   return (
     <>
-      <div className="absolute z-0 w-[90vw] max-w-[650px] h-[650px] bg-blue-600 blur-[80px] opacity-30 rounded-full pointer-events-none" />
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 z-0 w-[90vw] max-w-[650px] h-[650px] bg-[var(--primary)] blur-[100px] opacity-20 rounded-full pointer-events-none" />
 
       <section className="w-full px-4 sm:px-6 py-36 bg-background text-foreground transition-colors">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10"
+        >
           {/* Info Section */}
           <div className="md:w-1/2 space-y-6">
             <h2 className="text-3xl sm:text-4xl font-bold">Get In Touch</h2>
@@ -122,7 +129,7 @@ const ContactForm = React.memo(() => {
               </button>
             </form>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       <hr className="bg-border" />

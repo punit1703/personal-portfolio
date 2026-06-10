@@ -1,98 +1,39 @@
+"use client";
+
 import React from "react";
-import { ExternalLink, Github } from "lucide-react";
-import Image from "next/image";
+import { motion } from "framer-motion";
 
-interface ProjectCardProps {
-  title: string;
-  description: string;
-  imageUrl: string;
-  previewLink?: string;
-  githubLink: string;
-  techStack?: string[];
-  tags?: string[];
-}
-
-const ProjectCard: React.FC<ProjectCardProps> = ({
-  title,
-  description,
-  imageUrl,
-  previewLink,
-  githubLink,
-  techStack = [],
-  tags = [],
-}) => {
+export default function ProjectCard({ project, onClick }: { project: any, onClick: () => void }) {
   return (
-    <div className="w-full max-w-5xl mx-auto my-10 bg-[var(--card)] text-[var(--card-foreground)] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-transform duration-300 hover:scale-[1.05]">
+    <motion.div 
+      layoutId={`card-${project.title}`}
+      onClick={onClick}
+      className="w-full cursor-pointer bg-[var(--card)] text-[var(--card-foreground)] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl border border-[var(--border)] transition-all hover:scale-[1.02]"
+    >
       <div className="flex flex-col md:flex-row">
-        {/* Image Section */}
-        <div className="w-full md:w-1/2">
-          <div className="relative w-full aspect-[16/9] md:h-full border-b-2 sm:border-0 border-[var(--primary)]">
-            <Image
-              src={imageUrl}
-              alt={title}
-              fill
-              className="object-contain md:object-cover"
-              loading="lazy"
-            />
-          </div>
+        <div className="w-full md:w-5/12 relative overflow-hidden bg-gradient-to-br from-[var(--primary)]/10 via-[var(--background)] to-[var(--accent)]/10 flex items-center justify-center p-8 border-b sm:border-b-0 sm:border-r border-[var(--border)] h-48 md:h-auto">
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(var(--primary) 1.5px, transparent 1.5px)", backgroundSize: "24px 24px" }}></div>
+          <motion.h2 layoutId={`title-${project.title}`} className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-[var(--muted-foreground)] opacity-20 z-10 text-center tracking-tighter">
+            {project.title.split(' ').map((w: string) => w[0]).join('').substring(0,3).toUpperCase()}
+          </motion.h2>
+          <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-[var(--primary)] rounded-full blur-[80px] opacity-20"></div>
+          <div className="absolute -top-20 -left-20 w-60 h-60 bg-[var(--accent)] rounded-full blur-[80px] opacity-20"></div>
         </div>
 
-        {/* Text Section */}
-        <div className="w-full md:w-1/2 p-6 sm:p-8 flex flex-col justify-center">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold mb-2">{title}</h1>
-            <p className="text-[var(--muted-foreground)] text-sm sm:text-base">
-              {description}
-            </p>
-
-            {/* Tech Stack */}
-            {techStack.length > 0 && (
-              <p className="text-xs text-[var(--muted-foreground)] mt-4">
-                <span className="font-medium">Tech Stack:</span>{" "}
-                {techStack.join(", ")}
-              </p>
-            )}
-
-            {/* Tags */}
-            {tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-3">
-                {tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="text-xs bg-[var(--muted)] text-[var(--muted-foreground)] border border-border px-3 py-1 rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Buttons */}
-          <div className="flex gap-3 mt-6">
-            {previewLink && (
-              <a
-                href={previewLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-[var(--muted-foreground)] text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)] p-1.5 rounded-full transition duration-300"
-              >
-                <ExternalLink size={20} />
-              </a>
-            )}
-            <a
-              href={githubLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border border-[var(--muted-foreground)] text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)] p-1.5 rounded-full transition duration-300"
-            >
-              <Github size={20} />
-            </a>
+        <div className="w-full md:w-7/12 p-6 sm:p-10 flex flex-col justify-center bg-[var(--card)]">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-3">{project.title}</h1>
+          <p className="text-[var(--muted-foreground)] text-base line-clamp-2">
+            {project.description}
+          </p>
+          <div className="flex flex-wrap gap-2 mt-6">
+            {project.tags?.map((tag: string, index: number) => (
+              <span key={index} className="text-xs bg-[var(--muted)] text-[var(--muted-foreground)] border border-[var(--border)] px-3 py-1 rounded-full">
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
-};
-
-export default ProjectCard;
+}

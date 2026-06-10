@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Doc2Model - Linear Regression",
+    "description": "Auto-generate linear regression models from CSV files using scikit-learn and pandas.",
+    "githubLink": "https://github.com/punit1703/Doc2Model-Linear-Regression",
+    "techStack": ["Python", "pandas", "scikit-learn"],
+    "tags": ["Featured"],
+    "previewLink": ""
+  },
+  {
+    "title": "Doc2Model - Classification",
+    "description": "Train classification models from structured document data with performance metrics.",
+    "githubLink": "https://github.com/punit1703/Doc2Model-Classification",
+    "techStack": ["Python", "scikit-learn", "Matplotlib"],
+    "tags": ["ML"],
+    "previewLink": ""
+  },
+  {
+    "title": "TaskMaster (ToDo App)",
+    "description": "Fullstack ToDo app with Django, user auth, filtering, and stats dashboard.",
+    "githubLink": "https://github.com/punit1703/TaskMaster",
+    "techStack": ["Django", "Tailwind CSS", "SQLite"],
+    "tags": ["Web App"],
+    "previewLink": "https://taskmaster-b4id.onrender.com/"
+  },
+  {
+    "title": "Personal Portfolio Website",
+    "description": "Responsive dark-themed portfolio built with Next.js and Tailwind CSS.",
+    "githubLink": "https://github.com/punit1703/personal-portfolio",
+    "techStack": ["Next.js", "Tailwind CSS"],
+    "tags": ["Frontend"],
+    "previewLink": "https://personal-portfolio-uk6i.vercel.app/"
+  }
+]

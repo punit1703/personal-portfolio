@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { Spotlight } from "@/components/ui/spotlight";
 
@@ -22,10 +23,17 @@ function Hero() {
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="var(--primary)" />
 
         {/* Cursor-following Blob */}
-        <div
-          className="absolute z-0 w-[650px] h-[650px] bg-[var(--primary)] blur-[80px] opacity-45 rounded-full pointer-events-none transition-transform duration-[5s]"
-          style={{
-            transform: `translate(${position.x - 160}px, ${position.y - 160}px)`,
+        <motion.div
+          className="absolute z-0 w-[650px] h-[650px] bg-[var(--primary)] blur-[100px] opacity-30 rounded-full pointer-events-none"
+          animate={{
+            x: position.x - 325,
+            y: position.y - 325,
+          }}
+          transition={{
+            type: "spring",
+            damping: 30,
+            stiffness: 200,
+            mass: 0.5,
           }}
         />
 

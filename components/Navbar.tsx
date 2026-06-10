@@ -1,14 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
-import { useTheme } from "next-themes";
 import { useCurrentTime } from "@/hooks/useCurrentTime";
 
 function Navbar() {
   const [hovered, setHovered] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const time = useCurrentTime();
 
@@ -24,10 +21,7 @@ function Navbar() {
     return () => window.removeEventListener("resize", checkScreen);
   }, []);
 
-  const toggleTheme = () => {
-    if (!mounted) return;
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
-  };
+
 
   return (
     <>
@@ -63,17 +57,7 @@ function Navbar() {
           <NavLink href="/contact" label="Contact" />
         </div>
 
-        <button
-          onClick={toggleTheme}
-          className="p-2 hover:bg-[var(--muted)]/40 rounded-full transition-colors shrink-0"
-          aria-label="Toggle Theme"
-        >
-          {mounted && resolvedTheme === "dark" ? (
-            <Sun size={18} className="text-yellow-400" />
-          ) : (
-            <Moon size={18} className="text-gray-900" />
-          )}
-        </button>
+
       </div>
     </>
   );

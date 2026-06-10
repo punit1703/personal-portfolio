@@ -15,13 +15,19 @@ const skills = [
 const About = () => {
   return (
     <section className="relative w-full bg-background text-foreground py-20 px-4 sm:px-6 md:px-12 overflow-x-hidden">
-      <div className="absolute -top-20 left-1/5 -translate-x-1/2 z-0 w-[700px] h-[700px] bg-[var(--primary)] blur-2xl opacity-30 rounded-full pointer-events-none" />
+      <div className="absolute -top-20 left-1/5 -translate-x-1/2 z-0 w-[700px] h-[700px] bg-[var(--primary)] blur-[100px] opacity-20 rounded-full pointer-events-none" />
 
       {/* Main Grid */}
-      <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+      <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12"
+      >
         {/* Profile Image */}
         <div className="w-full md:w-1/2 flex justify-center items-end">
-          <div className="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-3xl overflow-hidden shadow-lg border border-muted">
+          <div className="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-3xl overflow-hidden shadow-2xl border border-[var(--border)] hover:scale-[1.02] transition-transform duration-500">
             <Image
               src={profileImage}
               alt="Punit Patel"
@@ -73,7 +79,7 @@ const About = () => {
             View Resume
           </a>
         </div>
-      </div>
+      </motion.div>
 
       {/* Skills Progress Bars */}
       <div className="max-w-4xl mx-auto mt-20 space-y-6">
