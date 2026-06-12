@@ -1,21 +1,5 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-const dataFilePath = path.join(process.cwd(), 'data', 'messages.json');
-
-const readMessages = () => {
-  try {
-    const fileContents = fs.readFileSync(dataFilePath, 'utf8');
-    return JSON.parse(fileContents);
-  } catch (error) {
-    return [];
-  }
-};
-
-const writeMessages = (messages: any[]) => {
-  fs.writeFileSync(dataFilePath, JSON.stringify(messages, null, 2), 'utf8');
-};
+import { sql } from '@vercel/postgres';
 
 const isAuthenticated = (request: Request) => {
   const authHeader = request.headers.get('authorization');
@@ -26,8 +10,8 @@ export async function GET(request: Request) {
   if (!isAuthenticated(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
-    const messages = readMessages();
-    return NextResponse.json(messages);
+    const { rows } = await sql`SELECT * FROM messages ORDER BY date DESC`;
+    return NextResponse.json(rows);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to read messages' }, { status: 500 });
   }
@@ -36,12 +20,13 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const newMessage = await request.json();
-    newMessage.date = new Date().toISOString();
-    newMessage.id = Date.now().toString();
+    const date = new Date().toISOString();
+    const id = Date.now().toString();
     
-    const messages = readMessages();
-    messages.unshift(newMessage);
-    writeMessages(messages);
+    await sql`
+      INSERT INTO messages (id, name, email, subject, message, date)
+      VALUES (${id}, ${newMessage.name}, ${newMessage.email}, ${newMessage.subject}, ${newMessage.message}, ${date})
+    `;
     
     return NextResponse.json({ success: true, message: 'Message saved successfully' });
   } catch (error) {
@@ -60,9 +45,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
 
-    let messages = readMessages();
-    messages = messages.filter((m: any) => m.id !== id);
-    writeMessages(messages);
+    await sql`DELETE FROM messages WHERE id = ${id}`;
     
     return NextResponse.json({ success: true });
   } catch (error) {

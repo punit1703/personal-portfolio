@@ -1,23 +1,5 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-const dataFilePath = path.join(process.cwd(), 'data', 'projects.json');
-
-// Helper to read projects
-const readProjects = () => {
-  try {
-    const fileContents = fs.readFileSync(dataFilePath, 'utf8');
-    return JSON.parse(fileContents);
-  } catch (error) {
-    return [];
-  }
-};
-
-// Helper to write projects
-const writeProjects = (projects: any[]) => {
-  fs.writeFileSync(dataFilePath, JSON.stringify(projects, null, 2), 'utf8');
-};
+import { sql } from '@vercel/postgres';
 
 const isAuthenticated = (request: Request) => {
   const authHeader = request.headers.get('authorization');
@@ -26,23 +8,33 @@ const isAuthenticated = (request: Request) => {
 
 export async function GET() {
   try {
-    const projects = readProjects();
-    return NextResponse.json(projects);
+    const { rows } = await sql`SELECT * FROM projects ORDER BY id DESC`;
+    return NextResponse.json(rows);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to read projects data' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to read projects' }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
   if (!isAuthenticated(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  
+
   try {
-    const newProject = await request.json();
-    const projects = readProjects();
-    projects.unshift(newProject);
-    writeProjects(projects);
-    return NextResponse.json({ success: true, project: newProject });
-  } catch (error) {
+    const project = await request.json();
+    
+    await sql`
+      INSERT INTO projects (title, description, tech_stack, tags, github_link, preview_link)
+      VALUES (
+        ${project.title}, 
+        ${project.description}, 
+        ${JSON.stringify(project.techStack || [])}, 
+        ${JSON.stringify(project.tags || [])}, 
+        ${project.githubLink || ''}, 
+        ${project.previewLink || ''}
+      )
+    `;
+    
+    return NextResponse.json({ success: true, message: 'Project saved successfully' });
+  } catch (error: any) {
     return NextResponse.json({ error: 'Failed to save project' }, { status: 500 });
   }
 }
@@ -51,18 +43,20 @@ export async function PUT(request: Request) {
   if (!isAuthenticated(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
-    const { originalTitle, updatedProject } = await request.json();
-    const projects = readProjects();
+    const project = await request.json();
     
-    const index = projects.findIndex((p: any) => p.title === originalTitle);
-    if (index === -1) {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
-    }
+    await sql`
+      UPDATE projects 
+      SET 
+        description = ${project.description}, 
+        tech_stack = ${JSON.stringify(project.techStack || [])}, 
+        tags = ${JSON.stringify(project.tags || [])}, 
+        github_link = ${project.githubLink || ''}, 
+        preview_link = ${project.previewLink || ''}
+      WHERE title = ${project.title}
+    `;
     
-    projects[index] = updatedProject;
-    writeProjects(projects);
-    
-    return NextResponse.json({ success: true, project: updatedProject });
+    return NextResponse.json({ success: true, message: 'Project updated successfully' });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update project' }, { status: 500 });
   }
@@ -79,9 +73,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 });
     }
 
-    let projects = readProjects();
-    projects = projects.filter((p: any) => p.title !== title);
-    writeProjects(projects);
+    await sql`DELETE FROM projects WHERE title = ${title}`;
     
     return NextResponse.json({ success: true });
   } catch (error) {
