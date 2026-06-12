@@ -17,7 +17,14 @@ const writeMessages = (messages: any[]) => {
   fs.writeFileSync(dataFilePath, JSON.stringify(messages, null, 2), 'utf8');
 };
 
-export async function GET() {
+const isAuthenticated = (request: Request) => {
+  const authHeader = request.headers.get('authorization');
+  return authHeader === `Bearer ${process.env.ADMIN_PASSCODE}`;
+};
+
+export async function GET(request: Request) {
+  if (!isAuthenticated(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const messages = readMessages();
     return NextResponse.json(messages);
@@ -43,6 +50,8 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  if (!isAuthenticated(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

@@ -4,6 +4,11 @@ import path from 'path';
 
 const dataFilePath = path.join(process.cwd(), 'data', 'about.json');
 
+const isAuthenticated = (request: Request) => {
+  const authHeader = request.headers.get('authorization');
+  return authHeader === `Bearer ${process.env.ADMIN_PASSCODE}`;
+};
+
 export async function GET() {
   try {
     const fileContents = fs.readFileSync(dataFilePath, 'utf8');
@@ -15,6 +20,8 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
+  if (!isAuthenticated(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const updatedAbout = await request.json();
     fs.writeFileSync(dataFilePath, JSON.stringify(updatedAbout, null, 2), 'utf8');

@@ -19,6 +19,11 @@ const writeProjects = (projects: any[]) => {
   fs.writeFileSync(dataFilePath, JSON.stringify(projects, null, 2), 'utf8');
 };
 
+const isAuthenticated = (request: Request) => {
+  const authHeader = request.headers.get('authorization');
+  return authHeader === `Bearer ${process.env.ADMIN_PASSCODE}`;
+};
+
 export async function GET() {
   try {
     const projects = readProjects();
@@ -29,6 +34,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  if (!isAuthenticated(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  
   try {
     const newProject = await request.json();
     const projects = readProjects();
@@ -41,6 +48,8 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  if (!isAuthenticated(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { originalTitle, updatedProject } = await request.json();
     const projects = readProjects();
@@ -60,6 +69,8 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  if (!isAuthenticated(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   try {
     const { searchParams } = new URL(request.url);
     const title = searchParams.get('title');

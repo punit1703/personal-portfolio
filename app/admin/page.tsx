@@ -21,12 +21,14 @@ export default function AdminPage() {
       const [resAnalytics, resProjects, resMessages, resAbout] = await Promise.all([
         fetch('/api/analytics'),
         fetch('/api/projects'),
-        fetch('/api/messages'),
+        fetch('/api/messages', { headers: { 'Authorization': `Bearer ${passcode}` } }),
         fetch('/api/about')
       ]);
       setAnalytics(await resAnalytics.json());
       setProjects(await resProjects.json());
-      setMessages(await resMessages.json());
+      if (resMessages.ok) {
+        setMessages(await resMessages.json());
+      }
       setAbout(await resAbout.json());
     } catch (err) {
       console.error("Failed to fetch admin data", err);
@@ -39,13 +41,21 @@ export default function AdminPage() {
     }
   }, [isAuthenticated]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode === "punitadmin") {
-      setIsAuthenticated(true);
-      setAuthError("");
-    } else {
-      setAuthError("Incorrect passcode");
+    setAuthError("");
+    try {
+      // Ping a protected route to verify the passcode
+      const res = await fetch('/api/messages', {
+        headers: { 'Authorization': `Bearer ${passcode}` }
+      });
+      if (res.ok) {
+        setIsAuthenticated(true);
+      } else {
+        setAuthError("Incorrect passcode");
+      }
+    } catch {
+      setAuthError("Authentication failed");
     }
   };
 
@@ -63,7 +73,7 @@ export default function AdminPage() {
             <Lock size={48} />
           </div>
           <h1 className="text-3xl font-black text-center mb-2 tracking-tight">Admin Portal</h1>
-          <p className="text-[var(--muted-foreground)] text-center mb-8">Enter your passcode to access the dashboard</p>
+          <p className="text-[var(--muted-foreground)] text-center mb-8">Enter your secure access key</p>
           
           <form onSubmit={handleLogin} className="space-y-4 relative z-10">
             <div>
@@ -104,14 +114,12 @@ export default function AdminPage() {
           <SidebarItem icon={<User />} label="About Content" isActive={activeTab === 'about'} onClick={() => setActiveTab('about')} />
         </nav>
         <div className="p-4 border-t border-[var(--border)]">
-          <button onClick={() => setIsAuthenticated(false)} className="flex items-center gap-3 w-full p-3 rounded-xl hover:bg-red-500/10 text-red-500 transition-colors font-medium">
+          <button onClick={() => { setIsAuthenticated(false); setPasscode(""); }} className="flex items-center gap-3 w-full p-3 rounded-xl hover:bg-red-500/10 text-red-500 transition-colors font-medium">
             <LogOut size={20} /> Logout
           </button>
         </div>
       </aside>
 
-      {/* Mobile Sidebar/Nav overlay could go here, omitting for brevity to focus on core functionality. In production, use a hamburger menu. */}
-      
       {/* Main Content */}
       <main className="flex-1 md:ml-64 p-4 md:p-10 min-h-screen relative overflow-hidden">
         {/* Ambient Effects */}
@@ -120,9 +128,9 @@ export default function AdminPage() {
         <div className="relative z-10 max-w-6xl mx-auto mt-20 md:mt-0">
           <AnimatePresence mode="wait">
             {activeTab === 'dashboard' && <DashboardTab key="dash" analytics={analytics} projects={projects} messages={messages} />}
-            {activeTab === 'projects' && <ProjectsTab key="proj" projects={projects} setProjects={setProjects} />}
-            {activeTab === 'messages' && <MessagesTab key="msg" messages={messages} setMessages={setMessages} />}
-            {activeTab === 'about' && <AboutTab key="abt" about={about} setAbout={setAbout} />}
+            {activeTab === 'projects' && <ProjectsTab key="proj" projects={projects} setProjects={setProjects} passcode={passcode} />}
+            {activeTab === 'messages' && <MessagesTab key="msg" messages={messages} setMessages={setMessages} passcode={passcode} />}
+            {activeTab === 'about' && <AboutTab key="abt" about={about} setAbout={setAbout} passcode={passcode} />}
           </AnimatePresence>
         </div>
       </main>
@@ -154,9 +162,9 @@ function DashboardTab({ analytics, projects, messages }: any) {
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
       <h1 className="text-4xl font-bold mb-8">Overview</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <StatCard icon={<Eye size={32} />} label="Total Page Views" value={analytics.views} color="text-blue-500" bg="bg-blue-500/10" />
-        <StatCard icon={<FolderKanban size={32} />} label="Total Projects" value={projects.length} color="text-green-500" bg="bg-green-500/10" />
-        <StatCard icon={<Mail size={32} />} label="Unread Messages" value={messages.length} color="text-purple-500" bg="bg-purple-500/10" />
+        <StatCard icon={<Eye size={32} />} label="Total Page Views" value={analytics?.views || 0} color="text-blue-500" bg="bg-blue-500/10" />
+        <StatCard icon={<FolderKanban size={32} />} label="Total Projects" value={projects?.length || 0} color="text-green-500" bg="bg-green-500/10" />
+        <StatCard icon={<Mail size={32} />} label="Unread Messages" value={messages?.length || 0} color="text-purple-500" bg="bg-purple-500/10" />
       </div>
     </motion.div>
   );
@@ -177,7 +185,7 @@ function StatCard({ icon, label, value, color, bg }: any) {
 }
 
 // --- Projects Tab ---
-function ProjectsTab({ projects, setProjects }: any) {
+function ProjectsTab({ projects, setProjects, passcode }: any) {
   const [isEditing, setIsEditing] = useState(false);
   const [currentProject, setCurrentProject] = useState<any>(null);
   
@@ -194,7 +202,10 @@ function ProjectsTab({ projects, setProjects }: any) {
   const handleDelete = async (title: string) => {
     if (!confirm(`Are you sure you want to delete ${title}?`)) return;
     try {
-      await fetch(`/api/projects?title=${encodeURIComponent(title)}`, { method: "DELETE" });
+      await fetch(`/api/projects?title=${encodeURIComponent(title)}`, { 
+        method: "DELETE",
+        headers: { 'Authorization': `Bearer ${passcode}` }
+      });
       setProjects(projects.filter((p: any) => p.title !== title));
     } catch (e) { console.error(e); }
   };
@@ -213,14 +224,20 @@ function ProjectsTab({ projects, setProjects }: any) {
       if (isUpdate && currentProject.originalTitle) {
         await fetch("/api/projects", {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${passcode}`
+          },
           body: JSON.stringify({ originalTitle: currentProject.originalTitle, updatedProject: formattedProject }),
         });
         setProjects(projects.map((p: any) => p.title === currentProject.originalTitle ? formattedProject : p));
       } else {
         await fetch("/api/projects", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${passcode}`
+          },
           body: JSON.stringify(formattedProject),
         });
         setProjects([formattedProject, ...projects]);
@@ -251,28 +268,28 @@ function ProjectsTab({ projects, setProjects }: any) {
             <label className="block text-sm mb-2 text-[var(--muted-foreground)]">Description</label>
             <textarea required rows={4} value={currentProject.description} onChange={e => setCurrentProject({ ...currentProject, description: e.target.value })} className="w-full p-4 bg-[var(--muted)]/50 rounded-xl border border-[var(--border)] focus:ring-1 focus:ring-[var(--primary)]" />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm mb-2 text-[var(--muted-foreground)]">Tech Stack (comma separated)</label>
-              <input type="text" value={currentProject.techStack} onChange={e => setCurrentProject({ ...currentProject, techStack: e.target.value })} className="w-full p-4 bg-[var(--muted)]/50 rounded-xl border border-[var(--border)]" />
+              <input type="text" value={currentProject.techStack} onChange={e => setCurrentProject({ ...currentProject, techStack: e.target.value })} className="w-full p-4 bg-[var(--muted)]/50 rounded-xl border border-[var(--border)] focus:ring-1 focus:ring-[var(--primary)]" />
             </div>
             <div>
               <label className="block text-sm mb-2 text-[var(--muted-foreground)]">Tags (comma separated)</label>
-              <input type="text" value={currentProject.tags} onChange={e => setCurrentProject({ ...currentProject, tags: e.target.value })} className="w-full p-4 bg-[var(--muted)]/50 rounded-xl border border-[var(--border)]" />
+              <input type="text" value={currentProject.tags} onChange={e => setCurrentProject({ ...currentProject, tags: e.target.value })} className="w-full p-4 bg-[var(--muted)]/50 rounded-xl border border-[var(--border)] focus:ring-1 focus:ring-[var(--primary)]" />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm mb-2 text-[var(--muted-foreground)]">GitHub Link</label>
-              <input type="url" value={currentProject.githubLink} onChange={e => setCurrentProject({ ...currentProject, githubLink: e.target.value })} className="w-full p-4 bg-[var(--muted)]/50 rounded-xl border border-[var(--border)]" />
+              <input type="url" value={currentProject.githubLink} onChange={e => setCurrentProject({ ...currentProject, githubLink: e.target.value })} className="w-full p-4 bg-[var(--muted)]/50 rounded-xl border border-[var(--border)] focus:ring-1 focus:ring-[var(--primary)]" />
             </div>
             <div>
               <label className="block text-sm mb-2 text-[var(--muted-foreground)]">Preview Link</label>
-              <input type="url" value={currentProject.previewLink} onChange={e => setCurrentProject({ ...currentProject, previewLink: e.target.value })} className="w-full p-4 bg-[var(--muted)]/50 rounded-xl border border-[var(--border)]" />
+              <input type="url" value={currentProject.previewLink} onChange={e => setCurrentProject({ ...currentProject, previewLink: e.target.value })} className="w-full p-4 bg-[var(--muted)]/50 rounded-xl border border-[var(--border)] focus:ring-1 focus:ring-[var(--primary)]" />
             </div>
           </div>
           <div className="flex gap-4 pt-4">
-            <button type="submit" className="flex-1 bg-[var(--foreground)] text-[var(--background)] py-4 rounded-xl font-bold flex justify-center items-center gap-2"><Save size={20}/> Save</button>
+            <button type="submit" className="flex-1 bg-[var(--foreground)] text-[var(--background)] py-4 rounded-xl font-bold flex justify-center items-center gap-2 hover:scale-[1.02] shadow-lg transition-transform"><Save size={20}/> Save</button>
             <button type="button" onClick={() => setIsEditing(false)} className="flex-1 border border-[var(--border)] py-4 rounded-xl font-bold hover:bg-[var(--muted)] transition-colors">Cancel</button>
           </div>
         </form>
@@ -288,14 +305,14 @@ function ProjectsTab({ projects, setProjects }: any) {
       </div>
       <div className="space-y-4">
         {projects.map((p: any, i: number) => (
-          <div key={i} className="bg-[var(--card)]/60 backdrop-blur-xl border border-[var(--border)] p-6 rounded-2xl flex justify-between items-center shadow-sm hover:shadow-md transition-all">
-            <div>
-              <h3 className="text-xl font-bold mb-1">{p.title}</h3>
-              <div className="flex gap-2">
+          <div key={i} className="bg-[var(--card)]/60 backdrop-blur-xl border border-[var(--border)] p-6 rounded-2xl flex flex-col md:flex-row gap-4 justify-between items-center shadow-sm hover:shadow-md transition-all">
+            <div className="w-full md:w-auto">
+              <h3 className="text-xl font-bold mb-2">{p.title}</h3>
+              <div className="flex flex-wrap gap-2">
                 {p.techStack?.slice(0,3).map((t: string, j: number) => <span key={j} className="text-xs px-2 py-1 bg-[var(--muted)] rounded-md text-[var(--muted-foreground)]">{t}</span>)}
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 shrink-0 w-full md:w-auto justify-end">
               <button onClick={() => handleEdit(p)} className="p-3 bg-[var(--primary)]/10 text-[var(--primary)] rounded-xl hover:bg-[var(--primary)]/20 transition-colors"><Edit size={20}/></button>
               <button onClick={() => handleDelete(p.title)} className="p-3 bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500/20 transition-colors"><Trash2 size={20}/></button>
             </div>
@@ -308,11 +325,14 @@ function ProjectsTab({ projects, setProjects }: any) {
 }
 
 // --- Messages Tab ---
-function MessagesTab({ messages, setMessages }: any) {
+function MessagesTab({ messages, setMessages, passcode }: any) {
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this message?")) return;
     try {
-      await fetch(`/api/messages?id=${id}`, { method: "DELETE" });
+      await fetch(`/api/messages?id=${id}`, { 
+        method: "DELETE",
+        headers: { 'Authorization': `Bearer ${passcode}` }
+      });
       setMessages(messages.filter((m: any) => m.id !== id));
     } catch (e) { console.error(e); }
   };
@@ -348,7 +368,7 @@ function MessagesTab({ messages, setMessages }: any) {
 }
 
 // --- About Content Tab ---
-function AboutTab({ about, setAbout }: any) {
+function AboutTab({ about, setAbout, passcode }: any) {
   const [formData, setFormData] = useState({ ...about, skills: about.skills?.join(", ") || "" });
   const [saving, setSaving] = useState(false);
 
@@ -364,7 +384,10 @@ function AboutTab({ about, setAbout }: any) {
     try {
       await fetch('/api/about', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${passcode}`
+        },
         body: JSON.stringify(updated)
       });
       setAbout(updated);
