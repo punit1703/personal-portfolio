@@ -19,10 +19,23 @@ export default function ProjectPage() {
   const selectedProject: any = projects.find((p: any) => p.title === selectedId);
 
   return (
-    <div className="space-y-8 py-10 px-4 relative max-w-6xl mx-auto min-h-screen">
-      <h1 className="font-bold text-4xl text-center my-10">My Projects</h1>
+    <div className="relative min-h-screen w-full overflow-hidden bg-[var(--background)]">
+      {/* Ambient Background Effects */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[var(--primary)] rounded-full blur-[120px] opacity-20"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[var(--accent)] rounded-full blur-[120px] opacity-20"></div>
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(var(--foreground) 1px, transparent 1px)", backgroundSize: "32px 32px" }}></div>
+      </div>
+
+      <div className="space-y-8 py-10 px-4 relative z-10 max-w-6xl mx-auto">
+        <div className="text-center my-16 relative">
+          <h1 className="font-black text-5xl md:text-7xl mb-6 tracking-tight">
+            My <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]">Projects</span>
+          </h1>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] mx-auto rounded-full mb-6 opacity-80"></div>
+        </div>
       
-      <div className="grid grid-cols-1 gap-10">
+        <div className="grid grid-cols-1 gap-10">
         {projects.length === 0 && (
           <p className="text-center text-[var(--muted-foreground)]">Loading projects...</p>
         )}
@@ -101,6 +114,7 @@ export default function ProjectPage() {
           </>
         )}
       </AnimatePresence>
+      </div>
     </div>
   );
 }
