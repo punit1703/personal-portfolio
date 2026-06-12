@@ -16,14 +16,14 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.4,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
 };
 
 const About = () => {
@@ -103,7 +103,7 @@ const About = () => {
               {skills.map((skill, i) => (
                 <span
                   key={i}
-                  className="bg-[var(--background)]/80 backdrop-blur-sm text-[var(--foreground)] px-4 py-2 rounded-xl text-sm font-medium border border-[var(--border)] hover:border-[var(--primary)] hover:text-[var(--primary)] hover:bg-[var(--primary)]/10 transition-all duration-300 cursor-default shadow-sm"
+                  className="bg-[var(--background)]/90 text-[var(--foreground)] px-4 py-2 rounded-xl text-sm font-medium border border-[var(--border)] hover:border-[var(--primary)] hover:text-[var(--primary)] hover:bg-[var(--primary)]/10 transition-all duration-300 cursor-default shadow-sm"
                 >
                   {skill}
                 </span>
