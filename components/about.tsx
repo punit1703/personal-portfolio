@@ -1,15 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import profileImage from "@/public/profile-1.webp";
 import { Code2, Database, BrainCircuit, Rocket, FileText, ChevronRight } from "lucide-react";
-
-const skills = [
-  "Python", "Django", "Next.js", "Tailwind CSS", 
-  "Machine Learning", "REST APIs", "PostgreSQL", "Docker", "Git", "React"
-];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -27,6 +22,26 @@ const itemVariants = {
 };
 
 const About = () => {
+  const [aboutData, setAboutData] = useState({
+    title: "Backend & Full-Stack",
+    bio: "A passionate Pythonista focused on crafting scalable web apps using Django, integrating smart ML features, and building fast UIs with modern tech like Next.js and Tailwind.",
+    philosophy: "I believe in writing clean, maintainable code that solves real problems. Performance and user experience are always at the forefront of my mind.",
+    skills: [
+      "Python", "Django", "Next.js", "Tailwind CSS", 
+      "Machine Learning", "REST APIs", "PostgreSQL", "Docker", "Git", "React"
+    ],
+    resumeLink: "/Punit's_Resume.pdf"
+  });
+
+  useEffect(() => {
+    fetch("/api/about")
+      .then(res => res.json())
+      .then(data => {
+        if (!data.error) setAboutData(data);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <section className="relative w-full bg-[var(--background)] text-[var(--foreground)] py-24 px-4 sm:px-6 md:px-12 overflow-hidden min-h-screen flex items-center">
       {/* Ambient Background Effects - Hidden on mobile to prevent lag */}
@@ -80,10 +95,10 @@ const About = () => {
             <div className="p-8 flex-1 flex flex-col justify-center relative z-10 -mt-16">
               <h3 className="text-3xl font-bold mb-2">Punit Patel</h3>
               <p className="text-[var(--primary)] font-medium mb-4 flex items-center gap-2">
-                <Code2 size={18} /> Backend & Full-Stack
+                <Code2 size={18} /> {aboutData.title}
               </p>
               <p className="text-[var(--muted-foreground)] leading-relaxed">
-                A passionate Pythonista focused on crafting scalable web apps using Django, integrating smart ML features, and building fast UIs with modern tech like Next.js and Tailwind.
+                {aboutData.bio}
               </p>
             </div>
           </motion.div>
@@ -100,7 +115,7 @@ const About = () => {
               <BrainCircuit className="text-[var(--primary)]" /> My Arsenal
             </h3>
             <div className="flex flex-wrap gap-3 relative z-10">
-              {skills.map((skill, i) => (
+              {aboutData.skills.map((skill, i) => (
                 <span
                   key={i}
                   className="bg-[var(--background)]/90 text-[var(--foreground)] px-4 py-2 rounded-xl text-sm font-medium border border-[var(--border)] hover:border-[var(--primary)] hover:text-[var(--primary)] hover:bg-[var(--primary)]/10 transition-all duration-300 cursor-default shadow-sm"
@@ -120,7 +135,7 @@ const About = () => {
               <Rocket className="text-[var(--primary)]" size={24} /> Philosophy
             </h3>
             <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">
-              I believe in writing clean, maintainable code that solves real problems. Performance and user experience are always at the forefront of my mind.
+              {aboutData.philosophy}
             </p>
           </motion.div>
 
@@ -133,7 +148,7 @@ const About = () => {
             <FileText size={48} className="mb-4 text-[var(--muted-foreground)] group-hover:text-[var(--foreground)] transition-colors duration-300 relative z-10" />
             <h3 className="text-xl font-bold mb-6 relative z-10">Want to know more?</h3>
             <a
-              href="/Punit's_Resume.pdf"
+              href={aboutData.resumeLink}
               target="_blank"
               rel="noopener noreferrer"
               className="relative z-10 inline-flex items-center gap-2 bg-[var(--foreground)] text-[var(--background)] px-6 py-3 rounded-full font-bold hover:scale-105 transition-transform duration-300 shadow-xl"

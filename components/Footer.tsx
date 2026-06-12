@@ -1,7 +1,14 @@
+"use client";
 import { Github, Instagram, Linkedin, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
   return (
     <footer className="bg-[var(--card)] text-[var(--card-foreground)] py-12 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 pb-10 border-b border-[var(--muted)]">

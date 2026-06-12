@@ -4,13 +4,26 @@ import path from 'path';
 
 const dataFilePath = path.join(process.cwd(), 'data', 'projects.json');
 
-export async function GET() {
+// Helper to read projects
+const readProjects = () => {
   try {
     const fileContents = fs.readFileSync(dataFilePath, 'utf8');
-    const projects = JSON.parse(fileContents);
+    return JSON.parse(fileContents);
+  } catch (error) {
+    return [];
+  }
+};
+
+// Helper to write projects
+const writeProjects = (projects: any[]) => {
+  fs.writeFileSync(dataFilePath, JSON.stringify(projects, null, 2), 'utf8');
+};
+
+export async function GET() {
+  try {
+    const projects = readProjects();
     return NextResponse.json(projects);
   } catch (error) {
-    console.error('Error reading projects:', error);
     return NextResponse.json({ error: 'Failed to read projects data' }, { status: 500 });
   }
 }
@@ -18,25 +31,49 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const newProject = await request.json();
-    
-    // Read existing
-    let projects = [];
-    try {
-      const fileContents = fs.readFileSync(dataFilePath, 'utf8');
-      projects = JSON.parse(fileContents);
-    } catch (e) {
-      // file might not exist, proceed with empty array
-    }
-
-    // Append
-    projects.unshift(newProject); // add to top
-
-    // Write back
-    fs.writeFileSync(dataFilePath, JSON.stringify(projects, null, 2), 'utf8');
-
+    const projects = readProjects();
+    projects.unshift(newProject);
+    writeProjects(projects);
     return NextResponse.json({ success: true, project: newProject });
   } catch (error) {
-    console.error('Error saving project:', error);
     return NextResponse.json({ error: 'Failed to save project' }, { status: 500 });
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    const { originalTitle, updatedProject } = await request.json();
+    const projects = readProjects();
+    
+    const index = projects.findIndex((p: any) => p.title === originalTitle);
+    if (index === -1) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
+    
+    projects[index] = updatedProject;
+    writeProjects(projects);
+    
+    return NextResponse.json({ success: true, project: updatedProject });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to update project' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const title = searchParams.get('title');
+    
+    if (!title) {
+      return NextResponse.json({ error: 'Title is required' }, { status: 400 });
+    }
+
+    let projects = readProjects();
+    projects = projects.filter((p: any) => p.title !== title);
+    writeProjects(projects);
+    
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });
   }
 }

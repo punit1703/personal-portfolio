@@ -1,14 +1,44 @@
 "use client";
-import React from "react";
-import { useForm, ValidationError } from "@formspree/react";
+import React, { useState } from "react";
 import { Mail, MapPin, User, PencilLine, MessageSquare, CheckCircle, Github, Linkedin, Twitter, Send } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 const ContactForm = React.memo(() => {
-  const [state, handleSubmit] = useForm("manjqqbl");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  if (state.succeeded) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMsg("");
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      subject: formData.get("subject"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const res = await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Failed to send");
+      setIsSuccess(true);
+    } catch (err) {
+      setErrorMsg("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (isSuccess) {
     return (
       <section className="relative min-h-[80vh] flex flex-col justify-center items-center text-center bg-[var(--background)] text-[var(--foreground)] px-4 overflow-hidden">
         {/* Ambient Effects */}
@@ -151,12 +181,6 @@ const ContactForm = React.memo(() => {
                     placeholder="Your Email"
                     required
                   />
-                  <ValidationError
-                    prefix="Email"
-                    field="email"
-                    errors={state.errors}
-                    className="text-red-500 text-sm mt-1 ml-2"
-                  />
                 </div>
 
                 <InputField
@@ -180,22 +204,18 @@ const ContactForm = React.memo(() => {
                     required
                     className="w-full pl-12 pr-4 py-4 rounded-xl bg-[var(--muted)]/50 text-[var(--foreground)] border border-[var(--border)] focus:bg-[var(--background)] focus:outline-none focus:border-[var(--primary)]/50 focus:ring-1 focus:ring-[var(--primary)]/50 transition-all resize-none"
                   />
-                  <ValidationError
-                    prefix="Message"
-                    field="message"
-                    errors={state.errors}
-                    className="text-red-500 text-sm mt-1 ml-2"
-                  />
                 </div>
+
+                {errorMsg && <p className="text-red-500 text-sm mt-2">{errorMsg}</p>}
 
                 <button
                   type="submit"
-                  disabled={state.submitting}
+                  disabled={isSubmitting}
                   className="group relative w-full flex items-center justify-center gap-2 bg-[var(--foreground)] text-[var(--background)] font-bold py-4 rounded-xl transition duration-300 hover:scale-[1.02] shadow-lg disabled:opacity-70 disabled:hover:scale-100 overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-                  {state.submitting ? "Sending..." : "Send Message"}
-                  {!state.submitting && <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />}
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                  {!isSubmitting && <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />}
                 </button>
               </form>
             </div>

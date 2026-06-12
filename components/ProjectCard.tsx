@@ -8,7 +8,7 @@ export default function ProjectCard({ project, onClick }: { project: any, onClic
     <motion.div 
       layoutId={`card-${project.title}`}
       onClick={onClick}
-      className="group w-full cursor-pointer bg-[var(--card)]/60 backdrop-blur-xl text-[var(--card-foreground)] rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-[var(--border)] hover:border-[var(--primary)]/50 transition-all duration-500 hover:-translate-y-2"
+      className="group w-full cursor-pointer bg-[var(--card)]/60 backdrop-blur-xl text-[var(--card-foreground)] rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-[var(--border)] hover:border-[var(--primary)]/50 transition-all duration-500 hover:-translate-y-2 will-change-transform"
     >
       <div className="flex flex-col md:flex-row h-full">
         <div className="w-full md:w-5/12 relative overflow-hidden bg-gradient-to-br from-[var(--primary)]/10 via-transparent to-[var(--accent)]/10 flex items-center justify-center p-8 border-b sm:border-b-0 sm:border-r border-[var(--border)] group-hover:border-[var(--primary)]/30 transition-colors duration-500 h-48 md:h-auto">
