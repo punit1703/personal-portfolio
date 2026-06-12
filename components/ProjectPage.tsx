@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ProjectCard from "./ProjectCard";
+import ProjectCard, { Project } from "./ProjectCard";
 import { X, ExternalLink, Github } from "lucide-react";
 
 export default function ProjectPage() {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function ProjectPage() {
       .catch((err) => console.error(err));
   }, []);
 
-  const selectedProject: any = projects.find((p: any) => p.title === selectedId);
+  const selectedProject: Project | undefined = projects.find((p: Project) => p.title === selectedId);
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[var(--background)]">
@@ -39,7 +39,7 @@ export default function ProjectPage() {
         {projects.length === 0 && (
           <p className="text-center text-[var(--muted-foreground)]">Loading projects...</p>
         )}
-        {projects.map((project: any) => (
+        {projects.map((project: Project) => (
           <ProjectCard 
             key={project.title} 
             project={project} 

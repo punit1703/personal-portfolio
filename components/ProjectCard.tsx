@@ -3,7 +3,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-export default function ProjectCard({ project, onClick }: { project: any, onClick: () => void }) {
+export interface Project {
+  title: string;
+  description: string;
+  techStack?: string[];
+  tags?: string[];
+  githubLink: string;
+  previewLink: string;
+}
+
+export default function ProjectCard({ project, onClick }: { project: Project, onClick: () => void }) {
   return (
     <motion.div 
       layoutId={`card-${project.title}`}
