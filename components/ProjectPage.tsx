@@ -48,9 +48,10 @@ export default function ProjectPage() {
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 pointer-events-none">
               <motion.div 
                 layoutId={`card-${selectedProject.title}`}
-                className="w-full max-w-4xl bg-[var(--card)] text-[var(--card-foreground)] rounded-3xl overflow-hidden shadow-2xl pointer-events-auto relative border border-[var(--border)] max-h-[90vh] overflow-y-auto"
+                className="w-full max-w-4xl bg-[var(--card)] text-[var(--card-foreground)] rounded-3xl overflow-hidden shadow-2xl pointer-events-auto relative border border-[var(--border)] max-h-[90vh] flex flex-col"
               >
-                <button 
+                <div className="w-full overflow-y-auto hide-scrollbar relative flex-1">
+                  <button 
                   onClick={() => setSelectedId(null)}
                   className="absolute top-6 right-6 z-20 bg-black/50 text-white p-2 rounded-full hover:bg-white hover:text-black transition"
                 >
@@ -93,6 +94,7 @@ export default function ProjectPage() {
                       <Github size={20} /> Source Code
                     </a>
                   </div>
+                </div>
                 </div>
               </motion.div>
             </div>

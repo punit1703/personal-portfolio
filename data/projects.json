@@ -1,34 +1,121 @@
 [
   {
+    "title": "University Landing Page",
+    "description": "Designed and developed a modern, responsive university website landing page featuring academic programs, campus information, admissions details, and student-focused content. Implemented a clean user experience, mobile-first design principles, and reusable UI components to ensure accessibility across devices.",
+    "techStack": [
+      "Next.js",
+      "React.js",
+      "Tailwind CSS",
+      "JavaScript"
+    ],
+    "tags": [
+      "Frontend",
+      "Responsive Design",
+      "UI/UX",
+      "Next.js"
+    ],
+    "githubLink": "https://github.com/punit1703/university-landing-nextjs",
+    "previewLink": "https://university-landing-nextjs-b1rq.vercel.app/"
+  },
+  {
+    "title": "Smart ETL Pipeline",
+    "description": "Designed and developed an intelligent ETL (Extract, Transform, Load) pipeline that automates data ingestion, cleaning, transformation, validation, and storage workflows. The system processes raw datasets, performs data quality checks, generates analytical summaries, and prepares structured data for downstream machine learning and business intelligence applications.",
+    "techStack": [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "PostgreSQL",
+      "Django REST Framework",
+      "SQL",
+      "Scikit-learn"
+    ],
+    "tags": [
+      "Featured",
+      "Data Engineering",
+      "ETL",
+      "Data Processing",
+      "Python",
+      "Backend"
+    ],
+    "githubLink": "https://github.com/punit1703/smart-etl-pipeline",
+    "previewLink": "https://smart-etl-pipeline.onrender.com/"
+  },
+  {
+    "title": "Resume ATS Ranker",
+    "description": "AI-powered recruitment platform that automates resume screening and candidate ranking. The system analyzes resumes against job descriptions using NLP techniques and ranks candidates based on semantic similarity. It provides recruiter dashboards, application management, authentication, and role-based access control for efficient hiring workflows.",
+    "techStack": [
+      "React.js",
+      "Django REST Framework",
+      "PostgreSQL",
+      "Python",
+      "JWT Authentication",
+      "TF-IDF",
+      "Scikit-learn"
+    ],
+    "tags": [
+      "Featured",
+      "AI",
+      "Machine Learning",
+      "NLP",
+      "Full Stack",
+      "Recruitment"
+    ],
+    "githubLink": "https://github.com/punit1703/resumeranker",
+    "previewLink": "https://resumeranker-mu.vercel.app/"
+  },
+  {
     "title": "Doc2Model - Linear Regression",
     "description": "Auto-generate linear regression models from CSV files using scikit-learn and pandas.",
     "githubLink": "https://github.com/punit1703/Doc2Model-Linear-Regression",
-    "techStack": ["Python", "pandas", "scikit-learn"],
-    "tags": ["Featured"],
+    "techStack": [
+      "Python",
+      "pandas",
+      "scikit-learn"
+    ],
+    "tags": [
+      "Featured"
+    ],
     "previewLink": ""
   },
   {
     "title": "Doc2Model - Classification",
     "description": "Train classification models from structured document data with performance metrics.",
     "githubLink": "https://github.com/punit1703/Doc2Model-Classification",
-    "techStack": ["Python", "scikit-learn", "Matplotlib"],
-    "tags": ["ML"],
+    "techStack": [
+      "Python",
+      "scikit-learn",
+      "Matplotlib"
+    ],
+    "tags": [
+      "ML"
+    ],
     "previewLink": ""
   },
   {
     "title": "TaskMaster (ToDo App)",
     "description": "Fullstack ToDo app with Django, user auth, filtering, and stats dashboard.",
     "githubLink": "https://github.com/punit1703/TaskMaster",
-    "techStack": ["Django", "Tailwind CSS", "SQLite"],
-    "tags": ["Web App"],
+    "techStack": [
+      "Django",
+      "Tailwind CSS",
+      "SQLite"
+    ],
+    "tags": [
+      "Web App"
+    ],
     "previewLink": "https://taskmaster-b4id.onrender.com/"
   },
   {
     "title": "Personal Portfolio Website",
     "description": "Responsive dark-themed portfolio built with Next.js and Tailwind CSS.",
     "githubLink": "https://github.com/punit1703/personal-portfolio",
-    "techStack": ["Next.js", "Tailwind CSS"],
-    "tags": ["Frontend"],
+    "techStack": [
+      "Next.js",
+      "Tailwind CSS"
+    ],
+    "tags": [
+      "Frontend"
+    ],
     "previewLink": "https://personal-portfolio-uk6i.vercel.app/"
   }
 ]
