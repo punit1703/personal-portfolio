@@ -7,6 +7,7 @@ import { useCurrentTime } from "@/hooks/useCurrentTime";
 function Navbar() {
   const [hovered, setHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const time = useCurrentTime();
 
   useEffect(() => {
     const checkScreen = () => {
