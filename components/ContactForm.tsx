@@ -20,6 +20,7 @@ const ContactForm = React.memo(() => {
       email: formData.get("email"),
       subject: formData.get("subject"),
       message: formData.get("message"),
+      website: formData.get("website"), // Honeypot
     };
 
     try {
@@ -121,7 +122,7 @@ const ContactForm = React.memo(() => {
             <motion.div variants={itemVariants} className="bg-[var(--card)]/80 md:bg-[var(--card)]/40 backdrop-blur-none md:backdrop-blur-xl border border-[var(--border)] p-8 rounded-3xl hover:border-[var(--primary)]/50 transition-colors duration-500 will-change-transform">
               <h3 className="text-2xl font-bold mb-4">Let&apos;s connect</h3>
               <p className="text-[var(--muted-foreground)] leading-relaxed mb-8">
-                I&apos;m currently looking for new opportunities, and my inbox is always open. Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
+                Have a website or web application idea? Tell me about it and I'll get back to you. My inbox is always open for freelance opportunities and collaborations!
               </p>
               
               <div className="space-y-6">
@@ -204,6 +205,12 @@ const ContactForm = React.memo(() => {
                     required
                     className="w-full pl-12 pr-4 py-4 rounded-xl bg-[var(--muted)]/50 text-[var(--foreground)] border border-[var(--border)] focus:bg-[var(--background)] focus:outline-none focus:border-[var(--primary)]/50 focus:ring-1 focus:ring-[var(--primary)]/50 transition-all resize-none"
                   />
+                </div>
+
+                {/* Honeypot field for spam protection */}
+                <div style={{ display: "none" }} aria-hidden="true">
+                  <label htmlFor="website">Website</label>
+                  <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" />
                 </div>
 
                 {errorMsg && <p className="text-red-500 text-sm mt-2">{errorMsg}</p>}

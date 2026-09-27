@@ -19,17 +19,7 @@ export async function GET(request: Request) {
       );
     `;
 
-    await sql`
-      CREATE TABLE IF NOT EXISTS projects (
-        id SERIAL PRIMARY KEY,
-        title VARCHAR(255) UNIQUE NOT NULL,
-        description TEXT NOT NULL,
-        tech_stack JSONB NOT NULL,
-        tags JSONB NOT NULL,
-        github_link VARCHAR(255),
-        preview_link VARCHAR(255)
-      );
-    `;
+
 
     await sql`
       CREATE TABLE IF NOT EXISTS about (

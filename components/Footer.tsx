@@ -1,14 +1,8 @@
 "use client";
 import { Github, Instagram, Linkedin, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-
 export default function Footer() {
-  const pathname = usePathname();
 
-  if (pathname?.startsWith("/admin")) {
-    return null;
-  }
   return (
     <footer className="bg-[var(--card)] text-[var(--card-foreground)] py-12 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 pb-10 border-b border-[var(--muted)]">
@@ -16,7 +10,7 @@ export default function Footer() {
         <div>
           <h3 className="text-2xl font-bold">Punit Patel</h3>
           <p className="text-[var(--muted-foreground)] mt-2 mb-4">
-            Python & Backend Developer | Building Smart Solutions with Code
+            Full-Stack Developer | Websites & Web Applications
           </p>
           <div className="flex gap-4 text-[var(--muted-foreground)]">
             <a href="https://github.com/punit1703" target="_blank" rel="noopener noreferrer">

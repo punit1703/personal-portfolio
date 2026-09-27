@@ -92,20 +92,6 @@
     "previewLink": ""
   },
   {
-    "title": "TaskMaster (ToDo App)",
-    "description": "Fullstack ToDo app with Django, user auth, filtering, and stats dashboard.",
-    "githubLink": "https://github.com/punit1703/TaskMaster",
-    "techStack": [
-      "Django",
-      "Tailwind CSS",
-      "SQLite"
-    ],
-    "tags": [
-      "Web App"
-    ],
-    "previewLink": "https://taskmaster-b4id.onrender.com/"
-  },
-  {
     "title": "Personal Portfolio Website",
     "description": "Responsive dark-themed portfolio built with Next.js and Tailwind CSS.",
     "githubLink": "https://github.com/punit1703/personal-portfolio",
@@ -116,6 +102,10 @@
     "tags": [
       "Frontend"
     ],
-    "previewLink": "https://personal-portfolio-uk6i.vercel.app/"
+    "previewLink": "https://personal-portfolio-uk6i.vercel.app/",
+    "screenshots": [
+      "/projects/portfolio/1.png",
+      "/projects/portfolio/2.png"
+    ]
   }
 ]

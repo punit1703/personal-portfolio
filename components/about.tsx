@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import profileImage from "@/public/profile-1.webp";
@@ -22,25 +22,16 @@ const itemVariants = {
 };
 
 const About = () => {
-  const [aboutData, setAboutData] = useState({
-    title: "Backend & Full-Stack",
-    bio: "A passionate Pythonista focused on crafting scalable web apps using Django, integrating smart ML features, and building fast UIs with modern tech like Next.js and Tailwind.",
-    philosophy: "I believe in writing clean, maintainable code that solves real problems. Performance and user experience are always at the forefront of my mind.",
+  const aboutData = {
+    title: "Full-Stack Developer",
+    bio: "I build modern websites and web applications using technologies such as Next.js, React, Django and Python, with a focus on clean interfaces, reliable functionality and practical solutions. I enjoy turning ideas into polished digital products, from responsive websites and landing pages to full-stack and AI-powered applications.",
+    philosophy: "I believe good software should be clean, maintainable and useful. I focus on building reliable functionality while keeping performance and user experience in mind.",
     skills: [
-      "Python", "Django", "Next.js", "Tailwind CSS", 
-      "Machine Learning", "REST APIs", "PostgreSQL", "Docker", "Git", "React"
+      "Next.js", "React", "Django", "Python", "Tailwind CSS", "REST APIs", "PostgreSQL",
+      "Machine Learning", "Docker", "Git"
     ],
     resumeLink: "/Punit's_Resume.pdf"
-  });
-
-  useEffect(() => {
-    fetch("/api/about")
-      .then(res => res.json())
-      .then(data => {
-        if (!data.error) setAboutData(data);
-      })
-      .catch(console.error);
-  }, []);
+  };
 
   return (
     <section className="relative w-full bg-[var(--background)] text-[var(--foreground)] py-24 px-4 sm:px-6 md:px-12 overflow-hidden min-h-screen flex items-center">

@@ -2,12 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useCurrentTime } from "@/hooks/useCurrentTime";
-
 function Navbar() {
   const [hovered, setHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const time = useCurrentTime();
 
   useEffect(() => {
     const checkScreen = () => {
@@ -22,10 +19,6 @@ function Navbar() {
 
   return (
     <>
-      <div className="hidden sm:block absolute top-6 right-6 text-sm sm:text-base text-muted-foreground font-medium z-20">
-        Based in Gandhinagar →{" "}
-        <span className="text-foreground">{time}</span>
-      </div>
 
       <div
         onMouseEnter={() => !isMobile && setHovered(true)}
