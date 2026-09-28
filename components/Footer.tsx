@@ -41,7 +41,7 @@ export default function Footer() {
           <h4 className="text-xl font-semibold mb-3">Contact Me</h4>
           <div className="flex items-center gap-2 text-[var(--muted-foreground)] mb-2">
             <Mail className="w-5 h-5" />
-            <span>punitr2006@gmail.com</span>
+            <span>punit06.dev@gmail.com</span>
           </div>
           <div className="flex items-center gap-2 text-[var(--muted-foreground)]">
             <MapPin className="w-5 h-5" />

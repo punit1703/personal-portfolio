@@ -132,7 +132,7 @@ const ContactForm = React.memo(() => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg">Email</h4>
-                    <p className="text-[var(--muted-foreground)]">punitr2006@gmail.com</p>
+                    <p className="text-[var(--muted-foreground)]">punit06.dev@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
